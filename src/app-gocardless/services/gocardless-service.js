@@ -263,30 +263,35 @@ export const goCardlessService = {
     const institution = await goCardlessService.getInstitution(institutionId);
     const bank = BankFactory(institutionId);
 
-    const response = await client.initSession({
-      redirectUrl: host + '/gocardless/link',
-      institutionId,
-      referenceId: uuid.v4(),
-      accessValidForDays: bank.accessValidForDays,
-      maxHistoricalDays: BANKS_WITH_LIMITED_HISTORY.includes(institutionId)
-        ? Number(institution.transaction_total_days) >= 90
-          ? '89'
-          : institution.transaction_total_days
-        : institution.transaction_total_days,
-      userLanguage: 'en',
-      ssn: null,
-      redirectImmediate: false,
-      accountSelection: false,
-    });
+    try {
+      const response = await client.initSession({
+        redirectUrl: host + '/gocardless/link',
+        institutionId,
+        referenceId: uuid.v4(),
+        accessValidForDays: bank.accessValidForDays,
+        maxHistoricalDays: BANKS_WITH_LIMITED_HISTORY.includes(institutionId)
+          ? Number(institution.transaction_total_days) >= 90
+            ? '89'
+            : institution.transaction_total_days
+          : institution.transaction_total_days,
+        userLanguage: 'en',
+        ssn: null,
+        redirectImmediate: false,
+        accountSelection: false,
+      });
+      handleGoCardlessError(response);
 
-    handleGoCardlessError(response);
+      const { link, id: requisitionId } = response;
 
-    const { link, id: requisitionId } = response;
-
-    return {
-      link,
-      requisitionId,
-    };
+      return {
+        link,
+        requisitionId,
+      };
+    } catch (error) {
+      if (error.response?.data)
+        console.error('GoCardless error', error.response.data);
+      throw error;
+    }
   },
 
   /**
