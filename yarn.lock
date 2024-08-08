@@ -4769,15 +4769,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nordigen-node@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "nordigen-node@npm:1.4.0"
+"nordigen-node@portal:/home/manu/dev/ext/nordigen-node::locator=actual-sync%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "nordigen-node@portal:/home/manu/dev/ext/nordigen-node::locator=actual-sync%40workspace%3A."
   dependencies:
     axios: "npm:^1.2.1"
     dotenv: "npm:^10.0.0"
-  checksum: 10c0/a04ec90480e4e65b2169d909ac9ea3044f764d59283162420d287a6b229808754dc78c758637724d63c87aa77f2237bc47543f521b0b4057ed3980d6db137e1a
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "normalize-path@npm:^3.0.0":
   version: 3.0.0

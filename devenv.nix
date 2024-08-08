@@ -13,6 +13,7 @@
         package = latest.nodePackages.pnpm;
       };
       yarn.enable = true;
+      yarn.install.enable = true;
     };
     typescript.enable = true;
     deno.enable = true;
